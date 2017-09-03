@@ -1,12 +1,10 @@
 package com.ldw;
 
-import com.ldw.structure.BPlusTree;
-import com.ldw.structure.StringComparator;
-import com.ldw.structure.StringSerDeser;
+import com.ldw.store.FileStore;
+import com.ldw.structure.BplusTree;
+import com.ldw.structure.Node;
 
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -14,13 +12,27 @@ import java.io.IOException;
  */
 public class App {
     public static void main(String[] args) throws IOException {
-        BPlusTree<String> tree = new BPlusTree<>(new File("E:\\test.bp"),
-                8, 4,
-                new StringSerDeser(), new StringComparator());
 
-        for (int i = 0; i < 20000; i++) {
-            tree.insert("a" + i, i);
+        FileStore f = new FileStore(new File("E:\\test.pd"));
+
+        BplusTree tree = new BplusTree(3, f);
+        for (int i = 0; i < 14; i++) {
+            tree.insertOrUpdate("" + i, i);
         }
+//        BPlusTree<String> tree = new BPlusTree<>(new File("E:\\test.bp"),
+//                8, 4,
+//                new StringSerDeser(), new StringComparator());
+//
+//        for (int i = 0; i < 200; i++) {
+//            if(i==182){
+//                System.out.println();
+//            }
+//            tree.insert("" + i, i);
+//        }
+//        tree.printTree();
+////        tree.delete("a37");
         tree.printTree();
+        tree.printTree();
+
     }
 }
